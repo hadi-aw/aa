@@ -1,23 +1,19 @@
-//U46368100
-//onLoad CustomerPurchaseOrders loads and displays customer purchase order data
-function onLoadCustomerPurchaseOrders() {
-    //Path to CSV file
-    const csvFilePath='data/purchase_orders.csv';
-    d3.dsv(',', csvFilePath,d3.autotype).then(
-    //pulls CSV file and then runs function
-    function (data) {
-        data.forEach(order => {
-            //Select the UL element where the list of items will be appended
-            const orderList = d3.select('#customerPurchaseOrderList');
-            //Create a new LI element for purchase order list:
-            const listItem = orderList.append('li');
-            //Set each customer purchase order content from the .csv file to the list item
-            listItem.text(`${order.customerName} - ${order.orderId} : ${order.purchaseAmount}`);
-        });
-    }
-).catch(error => {
-    console.log("Error while reading data from the purchase_orders csv file");
-})       
-   
+//U89173488
 
+
+function loadAndDisplayData() {
+    d3.csv("data/purchase_orders.csv").then(function(data) {
+        
+        var ul = d3.select("#purchase-orders");
+
+        
+        data.forEach(function(d) {
+            ul.append("li")
+              .text(`${d.customerName} - Order ID: ${d.orderId} - Purchase Amount: ${d.purchaseAmount}`);
+        });
+    }).catch(function(error) {
+        console.error("Error loading the CSV file: ", error);
+    });
 }
+
+loadAndDisplayData();
